@@ -34,7 +34,7 @@ export class News extends Component {
         super()
         console.log("Hello im a constructor")
         this.state = {
-            articles : this.articles
+            articles: this.articles
         }
     }
     render() {
@@ -42,16 +42,13 @@ export class News extends Component {
             <div className='container my-3'>
                 <h2>News Monkey - Top Headline</h2>
                 <div className="row">
-                    <div className="col-md-4">
-                        <NewsItems title="myTitle" description="hi" imageUrl="https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1099495_800x450.jpg" 
-                        newsUrl='TODO'/>
-                    </div>
-                    <div className="col-md-4">
-                        <NewsItems title="myTitle" description="hi" />
-                    </div>
-                    <div className="col-md-4">
-                        <NewsItems title="myTitle" description="hi" />
-                    </div>
+                    {this.state.articles.map((element) => {
+                        return <div className="col-md-4" key={element.url}>
+                            <NewsItems title={element.title.slice(0, 45)} description={element.description.slice(0, 88)} imageUrl={element.urlToImage}
+                                newsUrl={element.url} />
+                        </div>
+                    })}
+
 
                 </div>
             </div>
