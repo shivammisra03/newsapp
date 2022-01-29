@@ -7,17 +7,49 @@ export class News extends Component {
         super()
         console.log("Hello im a constructor")
         this.state = {
-            articles: []
+            articles: [],
+            page : 1,
+            totalResults : 0
         }
     }
 
     async componentDidMount() {
-        let url = 'https://newsapi.org/v2/top-headlines?country=in&apiKey=97b727ed6f9f4c4c96f60ae2a43669f7';
+        let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=97b727ed6f9f4c4c96f60ae2a43669f7&page=1&pageSize=20`;
         let data = await fetch(url);
         let parsedData = await data.json()
         console.log("parsed data :", parsedData)
-        this.setState({ articles: parsedData.articles})
+        this.setState({ articles: parsedData.articles, totalResults : parsedData.totalResults})
 
+    }
+
+    handlePrevChange = async() => {
+        let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=97b727ed6f9f4c4c96f60ae2a43669f7&page=${this.state.page - 1}&pageSize=20`;
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        this.setState({
+            page: this.state.page - 1,
+            articles: parsedData.articles
+        })
+    }
+
+    allResultsShown = () => {
+        return this.state.page + 1 > Math.ceil(this.state.totalResults / 20)
+    }
+
+    handleNextChange = async () => {
+
+        if(this.allResultsShown()){
+            console.log("All results shown")
+        } else {
+            let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=97b727ed6f9f4c4c96f60ae2a43669f7&page=${this.state.page + 1}&pageSize=20`;
+            let data = await fetch(url);
+            let parsedData = await data.json()
+        this.setState({
+                page: this.state.page + 1,
+                articles: parsedData.articles
+            })
+        }
+        
     }
 
     render() {
@@ -31,8 +63,10 @@ export class News extends Component {
                                 newsUrl={element.url} />
                         </div>
                     })}
-
-
+                </div>
+                <div className="container d-flex justify-content-between">
+                    <button type="button" disabled={this.state.page <= 1} className="btn btn-dark" onClick={this.handlePrevChange}> &larr; Previous</button>
+                    <button type="button" disabled={this.allResultsShown()} className="btn btn-dark" onClick={this.handleNextChange}>Next &rarr; </button>
                 </div>
             </div>
         )
