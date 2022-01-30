@@ -13,7 +13,6 @@ export class News extends Component {
 
     static propTypes = {
         name : PropTypes.string,
-        pageSize : PropTypes.string,
         category : PropTypes.string
     }
     constructor() {
