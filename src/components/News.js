@@ -79,13 +79,13 @@ export class News extends Component {
                     {!this.state.loading && this.state.articles.map((element) => {
                         return <div className="col-md-4" key={element.url}>
                             <NewsItems title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 88) : ""} imageUrl={element.urlToImage ? element.urlToImage : "https://images.indianexpress.com/2022/01/mars-1.jpg"}
-                                newsUrl={element.url} />
+                                newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name}/>
                         </div>
                     })}
                 </div>
                 <div className="container d-flex justify-content-between">
-                    <button type="button" disabled={this.state.page <= 1} className="btn btn-dark" onClick={this.handlePrevChange}> &larr; Previous</button>
-                    <button type="button" disabled={this.allResultsShown()} className="btn btn-dark" onClick={this.handleNextChange}>Next &rarr; </button>
+                    <button type="button" disabled={this.state.page <= 1} className="btn btn-success" onClick={this.handlePrevChange}> &larr; Previous</button>
+                    <button type="button" disabled={this.allResultsShown()} className="btn btn-success" onClick={this.handleNextChange}>Next &rarr; </button>
                 </div>
             </div>
         )
