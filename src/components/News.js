@@ -11,7 +11,6 @@ const News = (props) => {
     const [loading, setLoading] = useState(true)
     const [page, setPage] = useState(1)
     const [totalResults, setTotalResult] = useState(0)
-    // document.title = this.capitalize(props.category) + ' - NewsMonkey'
 
     const capitalize = (text) => {
         return text.charAt(0).toUpperCase() + text.slice(1)
@@ -19,6 +18,7 @@ const News = (props) => {
 
     useEffect(() => {
         updatePage()
+        document.title = `${capitalize(props.category)} + ' - NewsMonkey'`
     }, [])
 
     // async componentDidMount() {
@@ -99,7 +99,7 @@ const News = (props) => {
 
     return (
         <>
-            <h1 className="text-center" style={{ margin: '35px 0px' }}>News Monkey - Top {capitalize(props.category)} Headlines</h1>
+            <h1 className="text-center" style={{ margin: '35px 0px', marginTop: '90px' }}>News Monkey - Top {capitalize(props.category)} Headlines</h1>
             {loading && <Spinner />}
             <InfiniteScroll
                 dataLength={articles.length}
